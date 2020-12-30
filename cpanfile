@@ -6,3 +6,4 @@ requires 'NetPacket::IP';
 requires 'NetPacket::TCP';
 requires 'NetPacket::UDP';
 requires 'strict';
+requires 'JSON';
