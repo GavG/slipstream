@@ -446,7 +446,7 @@ function offset(off, data, origoff)
 		ip = ip.substr(0, ip.indexOf(':'))
 		if (ip != internal)
 		{
-			log("<br><b>status: SUCCESS! ip in returned SIP packet is " + ip + "</b>, different than what we sent (<b>"+internal+"</b>), victim NAT rewrote it<br><hr>")
+			log("<br><b style='color: red;'>status: SUCCESS! ip in returned SIP packet is " + ip + "</b>, different than what we sent (<b>"+internal+"</b>), victim NAT rewrote it<br><hr>")
 			if (scanForLocalip)
 				log("<b>confirmed internal IP is " + ip + "</b>")
 		}
