@@ -37,7 +37,7 @@ my $PAD = "^_"; # \r\n";
 my $SCAN = 'SAMY_MAXPKTSIZE';
 my $BEGIN = "BEGIN_$SCAN=";
 my $END = "END_$SCAN";
-my $SIPURL = 'sip:ec2-3-133-104-137.us-east-2.compute.amazonaws.com;transport';
+my $SIPURL = 'sip:ec2-3-17-135-238.us-east-2.compute.amazonaws.com;transport';
 my $filter_str = "port 5060";
 my $err = '';
 my $dev = pcap_lookupdev(\$err);  # find a device
@@ -53,6 +53,7 @@ my ($pktid, $eth, $ip, $tcp, $udp, $data);
 # compile the filter
 pcap_compile($pcap, \$filter, $filter_str, 1, 0) == 0 or die "fatal: filter error\n";
 pcap_setfilter($pcap, $filter);
+#attach a callback (process_packet) to the pcap filter
 pcap_loop($pcap, 0, \&process_packet, "samypkt");
 
 # close the device
@@ -67,6 +68,7 @@ sub pr
 
 sub process_packet
 {
+  #we do this for every packet
   my ($user_data, $header, $packet) = @_;
   my %len = ('hlen' => $header->{len});
 
@@ -98,6 +100,8 @@ sub process_packet
 
   # look for SAMY_MAXPKTSIZE (TCP MTU detection)
   my $ind = index($packet, $BEGIN);
+
+  #if we've found it we can do some meassuring
   if ($ind >= 0)
   {
     # how many bytes we want to fill (before we modify $ind)
@@ -107,14 +111,19 @@ sub process_packet
     $ind += length($BEGIN);
 
     # padding index
+    #search for the $PAD string from the end of the begin string onwards
     my $padind = index($packet, $PAD, $ind);
     if ($padind >= 0)
     {
-      my $id = substr($packet, $ind, $padind-$ind);
+      #we have some padding, looks like we put a client id in before the padding started
+      my $id = substr($packet, $ind, $padind - $ind);
+
+      #here we actually get the packet length seemingly
       %len = (%len, get_len($packet));
       $len{id} = $id;
 
       # track lengths
+      #this gets a ref to the len object assigned to a key of the packet id in the $max hash
       $max{$pktid} = \%len;
       print "ok1 pktid=$pktid len=$ip->{len} oldlen $max{$pktid}{ip_len}\n";
 
@@ -152,12 +161,13 @@ sub process_packet
         $max{$pktid}{orig_stuff_bytes} = $max{$pktid}{stuff_bytes};
         $max{$pktid}{stuff_bytes} = $MTU - $max{$pktid}{begin_ind};
       }
+      #GG Why are we getting $ip->{len}; again here? We did this already in 'get_len'
       $max{$pktid}{max_ip_len} = $ip->{len};
       print "ok3 $max{$pktid}{id} new=$max{$pktid}{stuff_bytes} pktlen=" . length($packet). " ip_len=$ip->{len} old_ip_len=$max{$pktid}{max_ip_len}\n";
       addUser($max{$pktid}{id}, %{$max{$pktid}});
     }
 
-    # look for sip:ec2-3-133-104-137.us-east-2.compute.amazonaws.com;transport SIP REGISTER packet
+    # look for sip:ec2-3-17-135-238.us-east-2.compute.amazonaws.com;transport SIP REGISTER packet
     $ind = index($packet, $SIPURL);
     if ($ind >= 0)
     {
