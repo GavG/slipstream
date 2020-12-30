@@ -9,13 +9,13 @@
 <div id=acidburn style="visibility: hidden; position: absolute;"></div>
 
 
-<a href="http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com">http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com</a> || <a href="https://twitter.com/samykamkar">@samykamkar</a> || <a href="mailto:code@ec2-3-17-135-238.us-east-2.compute.amazonaws.com">email me</a><hr>
+<a href="https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com">https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com</a> || <a href="https://twitter.com/samykamkar">@samykamkar</a> || <a href="mailto:code@ec2-3-17-135-238.us-east-2.compute.amazonaws.com">email me</a><hr>
 
 <!--
 <iframe scrolling=no frameborder=0 border=0 src="//ec2-3-17-135-238.us-east-2.compute.amazonaws.com/list/" width=600px height=160></iframe><br>
 -->
 
-<a href="http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com/slipstream/">NAT Slipstreaming</a> allows an attacker to remotely access any TCP/UDP services bound to a victim machine, bypassing the victim's NAT/firewall (arbitrary firewall pinhole control), just by the victim visiting a website. <a href="http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com/slipstream/">Full writeup here.</a><p>
+<a href="https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com/slipstream/">NAT Slipstreaming</a> allows an attacker to remotely access any TCP/UDP services bound to a victim machine, bypassing the victim's NAT/firewall (arbitrary firewall pinhole control), just by the victim visiting a website. <a href="https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com/slipstream/">Full writeup here.</a><p>
 
 <a href="https://github.com/samyk/slipstream/">github.com/samyk/slipstream</a>: NAT Slipstreaming PoC code</a><p>
 
@@ -347,7 +347,7 @@ function maxpktsize()
 
 	// note 'packet_size' length is critical, must be same as other post
 	log('responding to SYN with maximum segment size TCP option to control data size')
-	post("http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com:5060/samy_pktsiz", pkt, 1)
+	post("https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com:5060/samy_pktsiz", pkt, 1)
 	log('sending TCP beacon to detect maximum packet size and MTU')
 }
 
@@ -591,7 +591,7 @@ function attemptPin(pkt)
 	// keep changing url to evade browser caching attempts
 	// THE LENGTH OF THE URL MUST BE 12 bytes total, eg /samy_n?0012
 	// to match the same size we got when testing /samy_pktsiz
-	post("http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com:5060/samy_n?"+incr, pkt, 1)
+	post("https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com:5060/samy_n?"+incr, pkt, 1)
 }
 
 function post(url, str, reuse)
@@ -1023,7 +1023,7 @@ if (!String.prototype.padStart) {
     };
 }
 
-// to fix DOM-based XSS issues - http://ec2-3-17-135-238.us-east-2.compute.amazonaws.com/slipstream/server?localip=1.1.1.1<img src onerror%3dalert(1)>
+// to fix DOM-based XSS issues - https://ec2-3-17-135-238.us-east-2.compute.amazonaws.com/slipstream/server?localip=1.1.1.1<img src onerror%3dalert(1)>
 function htmlEncodeSpecial(value) {
     return value.replace(/</gi,'&lt;').replace(/>/gi,'&gt;').replace(/&lt;([a-zA-Z])&gt;/gi,'\<$1\>').replace(/&lt;\/([a-zA-Z])&gt;/gi,'</$1>');
 }

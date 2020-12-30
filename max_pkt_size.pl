@@ -38,7 +38,7 @@ my $SCAN = 'SAMY_MAXPKTSIZE';
 my $BEGIN = "BEGIN_$SCAN=";
 my $END = "END_$SCAN";
 my $SIPURL = 'sip:ec2-3-17-135-238.us-east-2.compute.amazonaws.com;transport';
-my $filter_str = "(dst port 5060)";
+my $filter_str = "port 5060";
 my $err = '';
 my $dev = pcap_lookupdev(\$err);  # find a device
 my %users;
