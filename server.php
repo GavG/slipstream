@@ -8,6 +8,19 @@
 
 <div id=acidburn style="visibility: hidden; position: absolute;"></div>
 
+<p>
+please run:<br>
+<?php 
+$port = @$_GET['port'] ? $_GET['port'] : 3306;
+$port = preg_replace("/[^0-9]/", "", $port); // to fix the xss issue
+?>
+<code>echo something here | (nc -vl <?php echo $port; ?> || nc -vvlp <?php echo $port; ?>)</code><p>
+then hit the button below<br>
+<form name=woot>Port: <input id=port type=text name=port value=<?php echo $port; ?>>
+&nbsp; <input type=button id=button value="please wait" disabled onClick="natpin()"><p>
+</form>
+<hr>
+<br>
 <pre id=log>
 </pre>
 
