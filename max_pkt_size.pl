@@ -37,7 +37,7 @@ my $PAD = "^_"; # \r\n";
 my $SCAN = 'SAMY_MAXPKTSIZE';
 my $BEGIN = "BEGIN_$SCAN=";
 my $END = "END_$SCAN";
-my $SIPURL = 'sip:ec2-3-17-135-238.us-east-2.compute.amazonaws.com;transport';
+my $SIPURL = 'sip:blog.decloak.live;transport';
 my $filter_str = "port 5060";
 my $err = '';
 my $dev = pcap_lookupdev(\$err);  # find a device
@@ -167,7 +167,7 @@ sub process_packet
       addUser($max{$pktid}{id}, %{$max{$pktid}});
     }
 
-    # look for sip:ec2-3-17-135-238.us-east-2.compute.amazonaws.com;transport SIP REGISTER packet
+    # look for sip:blog.decloak.live;transport SIP REGISTER packet
     $ind = index($packet, $SIPURL);
     if ($ind >= 0)
     {
