@@ -1,5 +1,5 @@
 <html>
-<head><title>Samy Kamkar - NAT Slipstreaming</title></head>
+<head><title>Blog</title></head>
 
 <body>
 <script>
